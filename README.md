@@ -24,10 +24,10 @@ Before you can use pnew, you'll need to build a cloneable template
 
 ## Usage
 
-1. Clone a new VM with `pnew`
-1. Start up and ssh into a stopped or suspended VM with `pstart`
-1. Log in to a running VM with `pssh`
-1. Get the IP address of a VM with `pip`
+1. Clone a new VM with `pnew VM_NAME`
+1. Start up and ssh into a stopped or suspended VM with `pstart VM_NAME`
+1. Log in to a running VM with `pssh VM_NAME`
+1. Get the IP address of a VM with `pip VM_NAME`
     * useful for copying files around
 
 ## Notes / TODOs
