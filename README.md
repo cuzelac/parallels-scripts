@@ -15,8 +15,11 @@ Before you can use pnew, you'll need to build a cloneable template
 1. Install Parallels Tools in that VM
 1. put `root/setup.sh` in the VM's /root and make sure it's executable
 1. Shut down the vm 
-    * you can optionally convert it to a template so you don't
+    * you can optionally clone it to a template so you don't
       accidentally screw up your base image
+
+            prlctl clone BASE_VM_NAME --name NEW_NAME --template
+
 1. Update the variable `BASE` with the UUID of your base VM
     * for templates: `prlctl list --template`
     * for regular VMs: `prlctl list --all`
