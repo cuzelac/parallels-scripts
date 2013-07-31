@@ -7,4 +7,4 @@ fi
 
 NAME=$1
 
-ssh -A -o StrictHostKeyChecking=no $(pip $1)
+ssh -A -o StrictHostKeyChecking=no $(pipaddr $1)
