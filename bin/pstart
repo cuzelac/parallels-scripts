@@ -5,8 +5,6 @@
 #   $ ls -l /etc/hosts
 #   -rw-rw-r--  1 root  cu  369 Nov 18 12:57 /etc/hosts
 
-set -x
-
 VM_NAME=$1
 HOSTNAME="${VM_NAME}.vm"
 HOSTS_FILE=/etc/hosts
