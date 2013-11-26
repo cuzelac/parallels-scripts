@@ -1,9 +1,6 @@
 #!/bin/bash
 
-# This will start your parallels vm and put an entry in /etc/hosts for HOST.vm
-# NOTE: /etc/hosts updating only works if you have write perms:
-#   $ ls -l /etc/hosts
-#   -rw-rw-r--  1 root  cu  369 Nov 18 12:57 /etc/hosts
+# This will start your parallels vm and log you in
 
 VM_NAME=$1
 HOSTNAME="${VM_NAME}.vm"
@@ -11,14 +8,5 @@ HOSTS_FILE=/etc/hosts
 
 prlctl start $VM_NAME
 pwait $VM_NAME
-IP=$(pipaddr $VM_NAME)
 
-grep -q $HOSTNAME$ $HOSTS_FILE
-if [ 0 == $? ]
-then
-  perl -p -i -e "next unless /${HOSTNAME}$/; s/^((\d{1,3}\.){3}\d{1,3})/${IP}/" $HOSTS_FILE >/dev/null 2>&1
-else
-  bash -c "echo $IP $HOSTNAME >> $HOSTS_FILE" >/dev/null 2>&1
-fi
-
-pssh $VM_NAME
+pssh $HOSTNAME

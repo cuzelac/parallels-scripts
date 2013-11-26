@@ -1,10 +1,27 @@
 #!/bin/bash
 
+# this will put an entry in /etc/hosts for HOST.vm and return the ip address
+# NOTE: /etc/hosts updating only works if you have write perms:
+#   $ ls -l /etc/hosts
+#   -rw-rw-r--  1 root  cu  369 Nov 18 12:57 /etc/hosts
+
 if [ -z "$1" ]; then
   echo must provide vm name
   exit 1
 fi
 
-NAME=$1
+VM_NAME=$1
+HOSTNAME="${VM_NAME}.vm"
+HOSTS_FILE=/etc/hosts
 
-prlctl exec $NAME ip addr | grep 'inet ' | grep eth | perl -p -e 's{.*inet\s+(\S+)/\d+\s.*}{$1}'
+IP=$(prlctl exec $VM_NAME ip addr | grep 'inet ' | grep eth | perl -p -e 's{.*inet\s+(\S+)/\d+\s.*}{$1}')
+
+grep -q $HOSTNAME$ $HOSTS_FILE
+if [ 0 == $? ]
+then
+  perl -p -i -e "next unless /${HOSTNAME}$/; s/^((\d{1,3}\.){3}\d{1,3})/${IP}/" $HOSTS_FILE >/dev/null 2>&1
+else
+  bash -c "echo $IP $HOSTNAME >> $HOSTS_FILE" >/dev/null 2>&1
+fi
+
+echo $IP
