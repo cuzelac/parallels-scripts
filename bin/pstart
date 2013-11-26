@@ -9,4 +9,4 @@ HOSTS_FILE=/etc/hosts
 prlctl start $VM_NAME
 pwait $VM_NAME
 
-pssh $HOSTNAME
+pssh $VM_NAME
