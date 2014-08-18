@@ -1,0 +1,10 @@
+#!/bin/bash
+
+host=$1
+
+IFS=$(prlctl exec $host netstat -i | grep eth | awk '{print $1}')
+
+for IF in $IFS
+do
+  prlctl exec $host bash -c "/sbin/ifdown $IF >/dev/null 2>&1; /sbin/ifup $IF"
+done
