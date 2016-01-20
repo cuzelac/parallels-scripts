@@ -1,0 +1,21 @@
+#!/bin/bash
+
+set -e
+set -x
+
+BASE_VM=new-base
+TEMPLATE_NAME="Centos 6"
+BACKUP_TEMPLATE_NAME="Centos 6 OLD"
+TEMPORARY_NAME="temp.$$"
+
+echo cloning new template from $BASE_VM
+prlctl clone "$BASE_VM" --name "$TEMPORARY_NAME" --template
+
+echo deleting old backup template
+prlctl delete "$BACKUP_TEMPLATE_NAME"
+
+echo backing up current template
+prlctl set "$TEMPLATE_NAME" --name "$BACKUP_TEMPLATE_NAME"
+
+echo setting new template
+prlctl set "$TEMPORARY_NAME" --name "$TEMPLATE_NAME"
